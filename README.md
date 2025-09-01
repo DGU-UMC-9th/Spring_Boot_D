@@ -1,6 +1,6 @@
-# :leaves: Spring_Boot C
+# :leaves: Spring_Boot D
 
-DGU-UMC 9기 Spring Boot 스터디 C조
+DGU-UMC 9기 Spring Boot 스터디 D조
 
 ## 💻 Member
 
