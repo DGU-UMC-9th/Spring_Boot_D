@@ -4,9 +4,9 @@ DGU-UMC 9기 Spring Boot 스터디 D조
 
 ## 💻 Member
 
-|               애나                     |               루크                |               미로                |               박박지현                |
+|               애나                     |               루크                |               미로                |              정준영               |
 | :-----------------------------------: | :-----------------------------------: | :-----------------------------------: | :-----------------------------------: |
-| [김민선](https://github.com/sunnyanna0) | [김도훈](https://github.com/DOHOON0127) | [이시은](https://github.com/miro-oss) | [박지현](https://github.com/wlgusqkr) |
+| [김민선](https://github.com/sunnyanna0) | [김도훈](https://github.com/DOHOON0127) | [이시은](https://github.com/miro-oss) | [정준영](https://github.com/cokanuri) |
 
 ## 📁 디렉토리 구조
 
