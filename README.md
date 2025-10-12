@@ -1,74 +1,146 @@
-# :leaves: Spring_Boot D
+# 🗂 속성별 제약조건 정리
 
-DGU-UMC 9기 Spring Boot 스터디 D조
+## 🧑‍💻 member
 
-## 💻 Member
+| 컬럼명 | 데이터 타입 | 제약조건 | 설명 |
+|--------|--------------|-----------|------|
+| member_id | BIGINT(20) | PK, NOT NULL | 회원 고유 ID |
+| name | VARCHAR(50) | NOT NULL | 회원 이름 |
+| nickname | VARCHAR(50) | NOT NULL | 닉네임 |
+| gender | VARCHAR(10) | NOT NULL | 성별 |
+| birth | DATE | NOT NULL | 생년월일 |
+| address | VARCHAR(255) | NOT NULL | 주소 |
+| status | VARCHAR(15) | NOT NULL | 회원 상태 (정상/탈퇴 등) |
+| withdrawal_date | DATETIME | NULL | 탈퇴일 |
+| email | VARCHAR(255) | NULL | 이메일 |
+| phone | VARCHAR(20) | NULL | 전화번호 |
+| created_at | DATETIME(6) | NOT NULL | 생성일 |
+| updated_at | DATETIME(6) | NOT NULL | 수정일 |
+| point | INT(20) | NOT NULL | 보유 포인트 |
 
-|               애나                     |               루크                |               미로                |              누리               |
-| :-----------------------------------: | :-----------------------------------: | :-----------------------------------: | :-----------------------------------: |
-| [김민선](https://github.com/sunnyanna0) | [김도훈](https://github.com/DOHOON0127) | [이시은](https://github.com/miro-oss) | [정준영](https://github.com/cokanuri) |
+---
 
-## 📁 디렉토리 구조
+## 🍽 food
 
-- src 디렉토리를 실제 작업을 진행하는 Spring Boot의 src와 일치시켜 주세요.
-- 미션 및 실습, 주차를 정확히 구분하기 위해 아래의 commit 규칙을 ‼️반드시‼️ 준수하여 commit 후 push 해 주세요.
+| 컬럼명 | 데이터 타입 | 제약조건 | 설명 |
+|--------|--------------|-----------|------|
+| category_id | BIGINT(20) | PK, NOT NULL | 음식 카테고리 ID |
+| category_name | VARCHAR(50) | NOT NULL | 음식 카테고리명 |
+| created_at | DATETIME(6) | NOT NULL | 생성일 |
+| updated_at | DATETIME(6) | NOT NULL | 수정일 |
 
-```bash
-├─.github
-│  └─PULL_REQUEST_TEMPLATE
-│  └─ISSUE_TEMPLATE
-├─README.md
-└─src
-    ├─main
-    │
-    └─test
-    │
-    └─...
+---
 
-```
+## 🧍 member_food
 
-## 🎨 commit 규칙
+| 컬럼명 | 데이터 타입 | 제약조건 | 설명 |
+|--------|--------------|-----------|------|
+| id | BIGINT(20) | PK, NOT NULL | 고유 ID |
+| member_id | BIGINT(20) | FK → member.member_id | 회원 ID |
+| category_id | BIGINT(20) | FK → food.category_id | 음식 카테고리 ID |
+| created_at | DATETIME(6) | NOT NULL | 생성일 |
+| updated_at | DATETIME(6) | NOT NULL | 수정일 |
 
-- 해당 commit이 미션에 관한 것일 경우: "mission/#해당 주차"
+---
 
-```
-Ex) 1주차 미션 수행 후
-mission/#01
-```
+## 🏁 mission
 
-- 해당 commit이 실습에 관한 것일 경우: "practice/#해당 주차"
+| 컬럼명 | 데이터 타입 | 제약조건 | 설명 |
+|--------|--------------|-----------|------|
+| mission_id | BIGINT(20) | PK, NOT NULL | 미션 고유 ID |
+| store_id | BIGINT(20) | FK → store.store_id | 가게 ID |
+| mission_condition | VARCHAR(50) | NOT NULL | 미션 조건 |
+| mission_deadline | DATE | NOT NULL | 미션 기한 |
+| point | INT(20) | NOT NULL | 포인트 |
+| created_at | DATETIME(6) | NOT NULL | 생성일 |
+| updated_at | DATETIME(6) | NOT NULL | 수정일 |
 
-```
-Ex) 2주차 실습 수행 후
-practice/#02
-```
+---
 
-- 해당 주차에 미션이나 실습이 없는 경우, 있는 주차에만 수행하시면 됩니다.
+## 🎯 member_mission
 
-## 🌳 branch 규칙
+| 컬럼명 | 데이터 타입 | 제약조건 | 설명 |
+|--------|--------------|-----------|------|
+| id | BIGINT(20) | PK, NOT NULL | 고유 ID |
+| member_id | BIGINT(20) | FK → member.member_id | 회원 ID |
+| mission_id | BIGINT(20) | FK → mission.mission_id | 미션 ID |
+| created_at | DATETIME(6) | NOT NULL | 생성일 |
+| updated_at | DATETIME(6) | NOT NULL | 수정일 |
 
-```bash
-├─main
-    ├─angela/main
-    │  └─angela/#1
-```
+---
 
-1. `닉네임/main 브랜치`가 기본 브랜치로 pr 보낼 때 root 브랜치(main 브랜치)가 아닌 닉네임/main 브랜치로 올립니다.
-2. 매주 워크북, 실습, 그리고 미션은 각자의 닉네임/main 브랜치를 base 브랜치로 삼아 `닉네임/이슈번호 브랜치`를 생성하여 관련 파일을 업로드합니다.
-3. 모든 팀원들의 approve를 받으면, pr을 머지하고 해당 pr을 생성한 브랜치(닉네임/이슈번호 브랜치)는 삭제합니다. approve와 merge는 스터디 진행 중에 이루어집니다.
+## 🏪 store
 
-## 🔖 커밋 컨벤션
+| 컬럼명 | 데이터 타입 | 제약조건 | 설명 |
+|--------|--------------|-----------|------|
+| store_id | BIGINT(20) | PK, NOT NULL | 가게 ID |
+| region_id | BIGINT(20) | FK → region.region_id | 지역 ID |
+| name | VARCHAR(50) | NOT NULL | 가게 이름 |
+| address | VARCHAR(255) | NOT NULL | 가게 주소 |
+| rating | DECIMAL(2,1) | NOT NULL | 평점 |
+| status | VARCHAR(50) | NOT NULL | 영업 상태 |
+| created_at | DATETIME(6) | NOT NULL | 생성일 |
+| updated_at | DATETIME(6) | NOT NULL | 수정일 |
 
-| Message  | 설명                  |
-| :------: | :-------------------- |
-| mission  | 미션 수행             |
-| practice | 실습 수행             |
-| keyword  | 키워드 정리           |
-| workbook | 워크북 정리           |
-|   fix    | 버그 수정             |
-|   docs   | 문서 수정             |
-| comment  | 주석 추가 및 변경     |
-|   test   | 테스트 코드 추가      |
-|  rename  | 파일 혹은 폴더명 수정 |
-|  remove  | 파일 혹은 폴더 삭제   |
-|  chore   | 기타 변경사항         |
+---
+
+## 📍 region
+
+| 컬럼명 | 데이터 타입 | 제약조건 | 설명 |
+|--------|--------------|-----------|------|
+| region_id | BIGINT(20) | PK, NOT NULL | 지역 고유 ID |
+| name | VARCHAR(50) | NOT NULL | 지역명 |
+| created_at | DATETIME(6) | NOT NULL | 생성일 |
+| updated_at | DATETIME(6) | NOT NULL | 수정일 |
+
+---
+
+## 📝 review
+
+| 컬럼명 | 데이터 타입 | 제약조건 | 설명 |
+|--------|--------------|-----------|------|
+| review_id | BIGINT(20) | PK, NOT NULL | 리뷰 고유 ID |
+| store_id | BIGINT(20) | FK → store.store_id | 가게 ID |
+| member_id | BIGINT(20) | FK → member.member_id | 작성자 ID |
+| content | VARCHAR(255) | NOT NULL | 리뷰 내용 |
+| rating | DECIMAL(2,1) | NOT NULL | 평점 |
+| created_at | DATETIME(6) | NOT NULL | 생성일 |
+| updated_at | DATETIME(6) | NOT NULL | 수정일 |
+
+---
+
+## 💬 review_reply
+
+| 컬럼명 | 데이터 타입 | 제약조건 | 설명 |
+|--------|--------------|-----------|------|
+| reply_id | BIGINT(20) | PK, NOT NULL | 댓글 ID |
+| review_id | BIGINT(20) | FK → review.review_id | 리뷰 ID |
+| content | VARCHAR(255) | NOT NULL | 댓글 내용 |
+| created_at | DATETIME(6) | NOT NULL | 생성일 |
+| updated_at | DATETIME(6) | NOT NULL | 수정일 |
+
+---
+
+## 🖼 review_photo
+
+| 컬럼명 | 데이터 타입 | 제약조건 | 설명 |
+|--------|--------------|-----------|------|
+| photo_id | BIGINT(20) | PK, NOT NULL | 사진 ID |
+| review_id | BIGINT(20) | FK → review.review_id | 리뷰 ID |
+| photo_url | VARCHAR(255) | NULL | 사진 URL |
+
+---
+
+# 🔗 연관관계 매핑 설계 근거
+
+| 관계 | 매핑 방향 | 관계 유형 | Cascade | 설계 이유 |
+|------|------------|------------|-----------|------------|
+| Member – Review | 양방향 | 1:N | ❌ | 회원이 작성한 리뷰 목록 조회 기능 필요 |
+| Member – MemberFood | 양방향 | 1:N | ✅ (REMOVE) | 회원이 좋아하는 음식 탐색 기능 구현 |
+| Member – MemberMission | 단방향 | 1:N | ❌ | 순환 참조 방지 및 단순화 |
+| Mission – MemberMission | 양방향 | 1:N | ❌ | ‘자신의 미션 조회’ 기능 구현 |
+| Mission – Store | 양방향 | N:1 | ✅ (REMOVE) | 특정 가게의 모든 미션 조회 기능 필요 |
+| Store – Region | 양방향 | N:1 | ❌ | 지역별 가게 목록 조회 기능 구현 |
+| Review – ReviewReply | 양방향 | 1:1 | ✅ (REMOVE) | 리뷰 상세화면에서 댓글 함께 표시 |
+| Review – ReviewPhoto | 양방향 | 1:N | ❌ | 리뷰 상세화면에서 사진 함께 표시 |
+| Food – MemberFood | 단방향 | 1:N | ❌ | 음식 기준으로 회원 탐색 필요 없음 |
