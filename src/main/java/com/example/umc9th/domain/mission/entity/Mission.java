@@ -1,7 +1,7 @@
 package com.example.umc9th.domain.mission.entity;
 
 import com.example.umc9th.domain.store.entity.Store;
-import com.example.umc9th.domain.mapping.entity.MemberMission;
+import com.example.umc9th.domain.membermission.entity.MemberMission;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDate;
@@ -43,9 +43,4 @@ public class Mission {
     @Builder.Default
     private List<MemberMission> memberMissions = new ArrayList<>();
 
-    /* 연관관계 편의 메서드 (선택) */
-    public void addMemberMission(MemberMission mm) {
-        memberMissions.add(mm);
-        mm.setMission(this);
-    }
 }
