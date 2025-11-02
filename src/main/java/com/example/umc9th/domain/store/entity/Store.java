@@ -16,6 +16,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Table(name = "store")
+@Builder
 public class Store extends BaseEntity {
 
     @Id

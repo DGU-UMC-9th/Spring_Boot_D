@@ -15,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Table(name = "review")
+@Builder
 public class Review extends BaseEntity {
 
     @Id

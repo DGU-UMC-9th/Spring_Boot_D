@@ -12,6 +12,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
 @Table(name = "region")
+@Builder
 public class Region extends BaseEntity {
 
     @Id
