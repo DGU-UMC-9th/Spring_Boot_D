@@ -4,6 +4,8 @@ import com.example.umc9th.domain.mission.dto.HomeMissionResponseDto;
 import com.example.umc9th.domain.mission.dto.MissionStatusResponseDto;
 import com.example.umc9th.domain.mission.entity.mapping.MemberMission;
 import com.example.umc9th.domain.mission.repository.MemberMissionRepository;
+import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
+import com.example.umc9th.global.apiPayload.exception.GeneralException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,6 +40,9 @@ public class MissionService {
     }
 
     public List<HomeMissionResponseDto> getHomeMissions(Long memberId, int page, int size) {
+        if (!memberMissionRepository.existsById(memberId)) {
+            throw new GeneralException(GeneralErrorCode.NOT_FOUND);
+        }
         Page<MemberMission> missionPage = memberMissionRepository.findHomeMissions(
                 memberId,
                 PageRequest.of(page, size)

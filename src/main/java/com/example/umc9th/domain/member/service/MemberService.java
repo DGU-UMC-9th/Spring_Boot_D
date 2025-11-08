@@ -4,6 +4,9 @@ import com.example.umc9th.domain.member.dto.MypageResponseDto;
 import com.example.umc9th.domain.member.dto.MypageResponseDto;
 import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.member.repository.MemberRepository;
+import com.example.umc9th.domain.test.exception.code.TestErrorCode;
+import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
+import com.example.umc9th.global.apiPayload.exception.GeneralException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +20,7 @@ public class MemberService {
     @Transactional(readOnly = true)
     public MypageResponseDto getMyPage(Long memberId) {
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("Member not found"));
+                .orElseThrow(() -> new GeneralException(GeneralErrorCode.NOT_FOUND));
 
         String phoneStatus = (member.getPhoneNumber() == null || member.getPhoneNumber().trim().isEmpty())
                 ? "미인증"

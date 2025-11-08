@@ -2,19 +2,20 @@ package com.example.umc9th.domain.review.service;
 
 import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.member.repository.MemberRepository;
-import com.example.umc9th.domain.review.dto.ReviewRequestDto;
-import com.example.umc9th.domain.review.dto.ReviewResponseDto;
-import com.example.umc9th.domain.review.entity.QReview;
+import com.example.umc9th.domain.review.dto.req.ReviewReqDto;
+import com.example.umc9th.domain.review.dto.res.ReviewResDto;
+
 import com.example.umc9th.domain.review.entity.Review;
+import com.example.umc9th.domain.review.exception.code.ReviewErrorCode;
 import com.example.umc9th.domain.review.repository.ReviewRepository;
 import com.example.umc9th.domain.store.entity.Store;
 import com.example.umc9th.domain.store.repository.StoreRepository;
-import com.querydsl.core.BooleanBuilder;
+
+import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
+import com.example.umc9th.global.apiPayload.exception.GeneralException;
 import lombok.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -25,12 +26,12 @@ public class ReviewService {
     private final StoreRepository storeRepository;
 
     @Transactional
-    public ReviewResponseDto createReview(ReviewRequestDto requestDto) {
+    public ReviewResDto createReview(ReviewReqDto requestDto) {
         Member member = memberRepository.findById(requestDto.getMemberId())
-                .orElseThrow(() -> new IllegalArgumentException("Member not found")); // 실제로 존재하는 회원인지 검사
+                .orElseThrow(() -> new GeneralException(ReviewErrorCode.MEMBER_NOT_FOUND)); // 실제로 존재하는 회원인지 검사
 
         Store store = storeRepository.findById(requestDto.getStoreId())
-                .orElseThrow(() -> new IllegalArgumentException("Store not found")); // 실제로 존재하는 가게인지 검사
+                .orElseThrow(() -> new GeneralException(ReviewErrorCode.STORE_NOT_FOUND));// 실제로 존재하는 가게인지 검사
 
         Review review = Review.builder()
                 .content(requestDto.getContent())
@@ -42,6 +43,6 @@ public class ReviewService {
 
         Review savedReview = reviewRepository.save(review);
 
-        return new ReviewResponseDto(savedReview.getId(), savedReview.getContent(), savedReview.getStar());
+        return new ReviewResDto(savedReview.getId(), savedReview.getContent(), savedReview.getStar());
     }
 }
