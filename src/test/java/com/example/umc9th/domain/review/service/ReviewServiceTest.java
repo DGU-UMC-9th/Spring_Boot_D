@@ -3,6 +3,7 @@ package com.example.umc9th.domain.review.service;
 import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.member.repository.MemberRepository;
 import com.example.umc9th.domain.review.dto.ReviewRequestDTO;
+import com.example.umc9th.domain.review.dto.ReviewResponseDTO;
 import com.example.umc9th.domain.review.entity.Review;
 import com.example.umc9th.domain.review.repository.ReviewRepository;
 import com.example.umc9th.domain.store.entity.Store;
@@ -14,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -42,7 +44,6 @@ class ReviewServiceTest {
         // Given
         Long storeId = 1L;
         Long memberId = 2L;
-        // DTO의 필드에 접근하기 위해 @AllArgsConstructor를 잠시 사용했다고 가정합니다.
         ReviewRequestDTO request = new ReviewRequestDTO("새로운 리뷰 내용", 5.0);
 
         // Mock 엔티티 생성
@@ -65,6 +66,33 @@ class ReviewServiceTest {
         assertThat(createdReview.getContent()).isEqualTo("새로운 리뷰 내용");
         assertThat(createdReview.getRating()).isEqualTo(5.0);
     }
+
+    @Test
+    @DisplayName("작성한 리뷰 목록 조회 테스트")
+    void getMyReviewsTest() {
+        // Given
+        Long memberId = 1L;
+
+        // JPQL 쿼리 결과로 가정할 Mock DTO 리스트
+        List<ReviewResponseDTO> mockReviews = List.of(
+                ReviewResponseDTO.builder().storeName("신승호").content("맛있어요!").rating(4.5).build(),
+                ReviewResponseDTO.builder().storeName("버거킹").content("별로네요.").rating(2.0).build()
+        );
+
+        // Mocking 설정: reviewRepository.findMemberReviews(memberId) 호출 시 mockReviews 반환
+        when(reviewRepository.findMemberReviews(memberId)).thenReturn(mockReviews);
+
+        // When
+        List<ReviewResponseDTO> result = reviewService.getMyReviews(memberId);
+
+        // Then
+        // 1. 결과 리스트 크기 검증
+        assertThat(result).hasSize(2);
+        // 2. 리뷰 내용이 예상대로 포함되어 있는지 검증 (순서 무관)
+        assertThat(result.stream().map(ReviewResponseDTO::getContent))
+                .containsExactlyInAnyOrder("맛있어요!", "별로네요.");
+    }
+
 
     @Test
     @DisplayName("리뷰 작성 실패 (회원 없음) 테스트")

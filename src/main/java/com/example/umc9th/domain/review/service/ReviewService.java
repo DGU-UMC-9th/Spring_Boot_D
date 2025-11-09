@@ -32,14 +32,12 @@ public class ReviewService {
     @Transactional
     public Review createReview(Long storeId, Long memberId, ReviewRequestDTO request) {
 
-        //  엔티티 조회
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new NoSuchElementException(memberId + "를 찾을 수 없습니다."));
 
         Store store = storeRepository.findById(storeId)
-                .orElseThrow(() -> new NoSuchElementException("가게 ID: " + storeId + "를 찾을 수 없습니다."));
+                .orElseThrow(() -> new NoSuchElementException( storeId + "를 찾을 수 없습니다."));
 
-        // Review 엔티티 생성
         Review newReview = Review.builder()
                 .member(member)
                 .store(store)

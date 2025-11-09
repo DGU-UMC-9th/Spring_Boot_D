@@ -25,7 +25,7 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
             "ORDER BY m.createdAt DESC")
     Page<MissionResponseDTO> findMemberMissionsByStatus(
             @Param("memberId") Long memberId,
-            @Param("status") MemberMissionStatus status,
+            @Param("status") String status,
             Pageable pageable
     );
 

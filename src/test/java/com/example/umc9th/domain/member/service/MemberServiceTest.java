@@ -33,7 +33,7 @@ class MemberServiceTest {
         Long memberId = 1L;
         Member mockMember = Member.builder()
                 .id(memberId)
-                .name("nickname012") // 닉네임 (name)
+                .name("jjy0107")
                 .email("test@naver.com")
                 .phoneNumber("010-1234-5678")
                 .point(2500)
@@ -46,7 +46,7 @@ class MemberServiceTest {
         MemberInfoResponseDTO result = memberService.getMemberInfo(memberId);
 
         // Then
-        assertThat(result.getNickname()).isEqualTo("nickname012");
+        assertThat(result.getNickname()).isEqualTo("jjy0107");
         assertThat(result.getEmail()).isEqualTo("test@naver.com");
     }
 

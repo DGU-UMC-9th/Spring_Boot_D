@@ -15,7 +15,7 @@ public class MissionResponseDTO {
 
     private Long missionId;
     private String storeName;
-    private String condition;
+    private String conditional;
     private Integer point;
     private String missionStatus;
 }

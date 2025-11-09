@@ -13,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -26,7 +26,7 @@ public class MissionService {
     public Page<MissionResponseDTO> getOngoingMissions(Long memberId, Pageable pageable) {
         return memberMissionRepository.findMemberMissionsByStatus(
                 memberId,
-                MemberMissionStatus.ONGOING, // 진행 중 상태
+                MemberMissionStatus.ONGOING.name(), // 진행 중 상태
                 pageable
         );
     }
@@ -34,7 +34,7 @@ public class MissionService {
     public Page<MissionResponseDTO> getCompletedMissions(Long memberId, Pageable pageable) {
         return memberMissionRepository.findMemberMissionsByStatus(
                 memberId,
-                MemberMissionStatus.COMPLETED, // 완료 상태
+                MemberMissionStatus.COMPLETED.name(), // 완료 상태
                 pageable
         );
     }
@@ -43,7 +43,7 @@ public class MissionService {
 
         //  지역에서 도전 가능한 미션 목록 조회
         Page<ChallengeMissionResponseDTO> challengeableMissions =
-                missionRepository.findChallengeableMissionsByRegion(regionId, LocalDateTime.now(), pageable);
+                missionRepository.findChallengeableMissionsByRegion(regionId, LocalDate.now(), pageable);
 
         //  지역에서 회원이 성공한 미션 개수 조회
         Long completedCount = memberMissionRepository.countCompletedMissionsByMemberAndRegion(memberId, regionId);

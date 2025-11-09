@@ -7,7 +7,7 @@ import com.example.umc9th.domain.review.dto.ReviewResponseDTO;
 import com.example.umc9th.domain.review.entity.Review;
 import java.util.List;
 
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewQueryDsl {
 
 
     @Query("SELECT new com.example.umc9th.domain.review.dto.ReviewResponseDTO(" +
@@ -16,6 +16,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "WHERE r.member.id = :memberId " +
             "ORDER BY r.createdAt DESC")
     List<ReviewResponseDTO> findMemberReviews(@Param("memberId") Long memberId);
-
 
 }
