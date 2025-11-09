@@ -1,7 +1,7 @@
 package com.example.umc9th.domain.store.entity;
 
 import com.example.umc9th.global.entity.BaseEntity;
-import com.example.umc9th.domain.location.entity.Location;
+import com.example.umc9th.domain.store.entity.Location;
 import com.example.umc9th.domain.mission.entity.Mission;
 import com.example.umc9th.domain.review.entity.Review;
 import jakarta.persistence.*;

@@ -1,4 +1,4 @@
-package com.example.umc9th.domain.location.entity;
+package com.example.umc9th.domain.store.entity;
 
 import com.example.umc9th.global.entity.BaseEntity;
 import com.example.umc9th.domain.store.entity.Store;
