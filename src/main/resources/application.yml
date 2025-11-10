@@ -4,9 +4,9 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver # MySQL JDBC 드라이버 클래스 이름
-    url: ${DB_URL} # jdbc:mysql://localhost:3306/{데이터베이스명}
-    username: ${DB_USER} # MySQL 유저 이름
-    password: ${DB_PW} # MySQL 비밀번호
+    url: jdbc:mysql://localhost:3306/umc9th # jdbc:mysql://localhost:3306/{데이터베이스명}
+    username: root # MySQL 유저 이름
+    password: 1234 # MySQL 비밀번호
 
   jpa:
     database: mysql # 사용할 데이터베이스 유형 지정 (MySQL)
@@ -17,3 +17,10 @@ spring:
     properties:
       hibernate:
         format_sql: true # 출력되는 SQL 쿼리를 보기 좋게 포맷팅
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
