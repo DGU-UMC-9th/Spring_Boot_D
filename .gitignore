@@ -43,3 +43,8 @@ out/
 application-local.yml
 application-dev.yml
 application-secret.yml
+
+# --- QueryDSL generated sources (빌드 폴더) ---
+/build/generated/sources/annotationProcessor/java/main/
+/build/generated/querydsl/
+/src/main/generated/

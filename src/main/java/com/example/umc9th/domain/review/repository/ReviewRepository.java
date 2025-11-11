@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-public interface ReviewRepository extends JpaRepository<Review, Long> {
+public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewQueryRepository {
 
     // 내가 쓴 리뷰 목록 (JPQL → DTO + 페이징)
     @Query("""
@@ -21,7 +21,4 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
         order by r.createdAt desc
     """)
     Page<MyReviewItemDto> findMyReviews(@Param("memberId") Long memberId, Pageable pageable);
-
-    // 총 개수/간단 카운트 필요 시
-    long countByMember_Id(Long memberId);
 }

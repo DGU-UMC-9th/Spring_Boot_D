@@ -3,8 +3,11 @@ package com.example.umc9th.domain.review.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -24,9 +27,11 @@ public class Reply {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "review_id", nullable = false)
     private Review review;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
-    /* 연관관계 편의 메서드 */
-    public void setReview(Review review) {
-        this.review = review;
+    @PrePersist
+    public void prePersist() {
+        if (createdAt == null) createdAt = LocalDateTime.now();
     }
 }
