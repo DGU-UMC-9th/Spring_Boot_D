@@ -1,13 +1,12 @@
-package com.example.umc9th.domain.review.dto;
+package com.example.umc9th.domain.review.dto.res;
 
 import com.example.umc9th.domain.review.entity.Reply;
-import jakarta.persistence.GeneratedValue;
 import lombok.*;
 
 @Getter
 @Builder
 @AllArgsConstructor
-public class ReviewSearchResponseDto {
+public class ReviewSearchResDto {
     private Long id;
     private String content;
     private float star;

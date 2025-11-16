@@ -1,11 +1,11 @@
-package com.example.umc9th.domain.mission.dto;
+package com.example.umc9th.domain.mission.dto.res;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class MissionStatusResponseDto {
+public class MissionStatusResDTO {
     private Long missionId;
     private String storeName;
     private String conditional;

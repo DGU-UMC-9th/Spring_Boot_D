@@ -1,10 +1,11 @@
 package com.example.umc9th.domain.review.controller;
 
-import com.example.umc9th.domain.review.dto.ReviewRequestDto;
-import com.example.umc9th.domain.review.dto.ReviewResponseDto;
-import com.example.umc9th.domain.review.service.ReviewService;
+import com.example.umc9th.domain.review.dto.req.ReviewReqDto;
+import com.example.umc9th.domain.review.dto.res.ReviewResDto;
+import com.example.umc9th.domain.review.exception.code.ReviewSuccessCode;
+import com.example.umc9th.domain.review.service.command.ReviewCommandService;
+import com.example.umc9th.global.apiPayload.ApiResponse;
 import lombok.*;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,11 +13,14 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/reviews")
 public class ReviewController {
 
-    private final ReviewService reviewService;
+    private final ReviewCommandService reviewCommandService;
 
-    @PostMapping
-    public ResponseEntity<ReviewResponseDto> createReview(@RequestBody ReviewRequestDto requestDto) {
-        ReviewResponseDto responseDto = reviewService.createReview(requestDto);
-        return ResponseEntity.ok(responseDto);
+    @PostMapping("/members/{memberId}/stores/{storeId}")
+    public ApiResponse<ReviewResDto.CreateReviewDTO> createReview(
+            @PathVariable Long memberId,
+            @PathVariable Long storeId,
+            @RequestBody ReviewReqDto.CreateReviewDTO dto
+    ) {
+        return ApiResponse.onSuccess(ReviewSuccessCode.REVIEW_CREATED, reviewCommandService.createReview(memberId, storeId, dto));
     }
 }
