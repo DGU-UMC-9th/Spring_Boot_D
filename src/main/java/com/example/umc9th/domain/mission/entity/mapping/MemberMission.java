@@ -2,6 +2,7 @@ package com.example.umc9th.domain.mission.entity.mapping;
 
 import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.mission.entity.Mission;
+import com.example.umc9th.domain.mission.enums.MemberMissionStatus;
 import com.example.umc9th.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -26,5 +27,8 @@ public class MemberMission extends BaseEntity {
     @JoinColumn(name = "mission_id")
     private Mission mission;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private MemberMissionStatus status;
 
 }

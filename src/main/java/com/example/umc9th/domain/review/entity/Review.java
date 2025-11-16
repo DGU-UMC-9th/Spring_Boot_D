@@ -4,6 +4,8 @@ package com.example.umc9th.domain.review.entity;
 import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.store.entity.Store;
 import com.example.umc9th.global.entity.BaseEntity;
+import com.querydsl.core.annotations.QueryType;
+import com.querydsl.core.types.PathType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,10 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Table(name = "review")
+@Builder
 public class Review extends BaseEntity {
 
     @Id
