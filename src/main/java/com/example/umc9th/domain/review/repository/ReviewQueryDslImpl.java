@@ -8,8 +8,8 @@ import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.support.PageableExecutionUtils;
 
 import java.util.List;
 
@@ -29,7 +29,6 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
             Pageable pageable) {
 
         BooleanBuilder builder = new BooleanBuilder();
-
         builder.and(review.member.id.eq(memberId));
 
         if (request.getStoreId() != null) {
@@ -59,15 +58,14 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
                 .limit(pageable.getPageSize())
                 .fetch();
 
-        long total = queryFactory
+        Long total = queryFactory
                 .select(review.count())
                 .from(review)
                 .where(builder)
                 .fetchOne();
 
-        return PageableExecutionUtils.getPage(content, pageable, () -> total);
+        return new PageImpl<>(content, pageable, total != null ? total : 0L);
     }
-
 
     private BooleanExpression storeIdEq(Long storeId) {
         return storeId != null ? review.store.id.eq(storeId) : null;
@@ -79,7 +77,8 @@ public class ReviewQueryDslImpl implements ReviewQueryDsl {
         }
         double nextRating = rating + 1.0;
 
+        // rating은 Double이므로 goe, lt 사용 가능
         return review.rating.goe(rating)
-                .lt(nextRating);
+                .and(review.rating.lt(nextRating));
     }
 }

@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -11,10 +13,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class ChallengeMissionResponseDTO {
-
     private Long missionId;
     private String storeName;
-    private LocalDateTime deadline;
+    private LocalDate deadline;      // LocalDateTime → LocalDate
     private String condition;
     private Integer point;
 }

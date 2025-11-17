@@ -29,14 +29,13 @@ public class ReviewService {
         return reviewRepository.findMemberReviews(memberId);
     }
 
-    @Transactional
     public Review createReview(Long storeId, Long memberId, ReviewRequestDTO request) {
 
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new NoSuchElementException(memberId + "를 찾을 수 없습니다."));
 
         Store store = storeRepository.findById(storeId)
-                .orElseThrow(() -> new NoSuchElementException( storeId + "를 찾을 수 없습니다."));
+                .orElseThrow(() -> new NoSuchElementException(storeId + "를 찾을 수 없습니다."));
 
         Review newReview = Review.builder()
                 .member(member)
@@ -45,7 +44,8 @@ public class ReviewService {
                 .rating(request.getRating())
                 .build();
 
-        return reviewRepository.save(newReview);
-    }
+        reviewRepository.save(newReview);
 
+        return newReview;
+    }
 }
