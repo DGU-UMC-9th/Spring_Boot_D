@@ -10,4 +10,10 @@ public class TestResDTO {
     public static class Testing {
         private String testString;
     }
+
+    @Builder
+    @Getter
+    public static class Exception {
+        private String testString;
+    }
 }

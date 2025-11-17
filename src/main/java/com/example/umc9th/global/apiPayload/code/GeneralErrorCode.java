@@ -20,6 +20,15 @@ public enum GeneralErrorCode implements BaseErrorCode{
     NOT_FOUND(HttpStatus.NOT_FOUND,
             "COMMON404_1",
             "요청한 리소스를 찾을 수 없습니다."),
+    INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,
+            "COMMON500_1",
+            "예기치 않은 서버 에러가 발생했습니다."),
+    // Member Error
+    MEMBER_NOT_FOUND(HttpStatus.BAD_REQUEST, "MEMBER4001", "사용자가 없습니다."),
+    NICKNAME_NOT_EXIST(HttpStatus.BAD_REQUEST, "MEMBER4002", "닉네임은 필수 입니다."),
+
+    // Article Error
+    ARTICLE_NOT_FOUND(HttpStatus.NOT_FOUND, "ARTICLE4001", "게시글이 없습니다."),
     ;
 
     private final HttpStatus status;
