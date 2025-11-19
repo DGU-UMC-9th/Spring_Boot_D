@@ -2,6 +2,7 @@ package com.example.umc9th.domain.member.entity;
 
 
 import com.example.umc9th.domain.member.entity.mapping.MemberFood;
+import com.example.umc9th.domain.member.enums.Address;
 import com.example.umc9th.domain.member.enums.Gender;
 import com.example.umc9th.domain.member.enums.MemberStatus;
 import com.example.umc9th.domain.review.entity.Review;
@@ -42,7 +43,11 @@ public class Member extends BaseEntity {
     private LocalDate birth;
 
     @Column(name = "address", nullable = false)
-    private String address;
+    @Enumerated(EnumType.STRING)
+    private Address address;
+
+    @Column(name = "detail_address")
+    private String detailAddress;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -58,9 +63,11 @@ public class Member extends BaseEntity {
     private String phoneNumber;
 
     @Column(name = "point")
-    private int point;
+    @Builder.Default
+    private Integer point = 0 ;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @Builder.Default
     private List<MemberFood> memberFoodList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")

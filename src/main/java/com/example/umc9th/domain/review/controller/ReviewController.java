@@ -3,7 +3,9 @@ package com.example.umc9th.domain.review.controller;
 import com.example.umc9th.domain.review.dto.ReviewDetailResponseDTO;
 import com.example.umc9th.domain.review.dto.ReviewFilterRequest;
 import com.example.umc9th.domain.review.dto.ReviewRequestDTO;
+import com.example.umc9th.domain.review.dto.ReviewResponseDTO;
 import com.example.umc9th.domain.review.entity.Review;
+import com.example.umc9th.domain.review.service.ReviewCommandService;
 import com.example.umc9th.domain.review.service.ReviewQueryService; // 필터링 조회
 import com.example.umc9th.domain.review.service.ReviewService; // 리뷰 작성
 import com.example.umc9th.global.apiPayload.ApiResponse;
@@ -22,17 +24,17 @@ import java.net.URI;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final ReviewCommandService reviewCommandService;
     private final ReviewQueryService reviewQueryService;
 
 
-    @PostMapping
-    public ApiResponse<ReviewRequestDTO> createReview(@PathVariable Long storeId,
-                                                      @PathVariable Long memberId,
-                                                      @RequestBody ReviewRequestDTO request) {
 
-        Review review = reviewService.createReview(storeId, memberId, request);
+    @PostMapping("/members/{memberId}")
+    public ApiResponse<ReviewResponseDTO> createReview(@PathVariable Long storeId,
+                                                       @PathVariable Long memberId,
+                                                       @RequestBody ReviewRequestDTO request) {
 
-        return ApiResponse.onSuccess(GeneralSuccessCode.CREATED, request);
+        return ApiResponse.onSuccess(GeneralSuccessCode.CREATED, reviewCommandService.createReview(storeId, memberId, request));
     }
 
 

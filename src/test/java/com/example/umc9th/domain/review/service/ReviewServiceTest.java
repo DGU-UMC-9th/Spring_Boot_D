@@ -38,6 +38,7 @@ class ReviewServiceTest {
     @Mock
     private StoreRepository storeRepository;
 
+
     @Test
     @DisplayName("리뷰 작성 성공 테스트")
     void createReview_success() {

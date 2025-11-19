@@ -5,11 +5,31 @@ import com.example.umc9th.global.apiPayload.code.BaseErrorCode;
 import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
 import com.example.umc9th.global.apiPayload.exception.GeneralException;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestControllerAdvice
 public class GeneralExceptionAdvice {
+
+    // 컨트롤러 메서드에서 @Valid 어노테이션 사용하여  DTO 유효성 검사 수행
+    @ExceptionHandler
+    protected ResponseEntity<ApiResponse<Map<String,String>>> handleMethodArgumentNotValidException(
+            MethodArgumentNotValidException ex
+    ) {
+        // 검사에 실패한 필드와 메시지 저장하는 Map
+        HashMap<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage()));
+
+        GeneralErrorCode code = GeneralErrorCode.NOT_FOUND;
+        ApiResponse<Map<String, String>> errorResponse = ApiResponse.onFailure(code, errors);
+
+        return ResponseEntity.status(code.getStatus()).body(errorResponse);
+    }
 
     // 애플리케이션에서 발생하는 커스텀 예외를 처리
     @ExceptionHandler(GeneralException.class)

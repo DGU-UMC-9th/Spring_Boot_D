@@ -17,7 +17,7 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
 
 
     @Query("SELECT new com.example.umc9th.domain.mission.dto.MissionResponseDTO(" +
-            "ms.id, s.name, ms.condition, ms.point, m.status) " +
+            "ms.id, s.name, ms.conditional, ms.pointReward, CAST(m.status AS string)) " +
             "FROM MemberMission m " +
             "JOIN m.mission ms " +
             "JOIN ms.store s " +
