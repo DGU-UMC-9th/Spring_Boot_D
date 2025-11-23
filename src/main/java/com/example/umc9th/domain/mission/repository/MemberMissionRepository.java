@@ -2,6 +2,7 @@ package com.example.umc9th.domain.mission.repository;
 
 import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.mission.dto.ChallengeMissionResponseDTO;
+import com.example.umc9th.domain.mission.entity.Mission;
 import com.example.umc9th.domain.mission.enums.MemberMissionStatus;
 import com.example.umc9th.domain.mission.dto.MissionResponseDTO;
 import com.example.umc9th.domain.mission.entity.mapping.MemberMission;
@@ -14,6 +15,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
 
@@ -42,4 +44,5 @@ public interface MemberMissionRepository extends JpaRepository<MemberMission, Lo
     );
 
     Page<MemberMission> findAllByStatusAndMember(MemberMissionStatus status, Member member, PageRequest pageRequest);
+   Optional<MemberMission> findByMemberAndMission(Member member, Mission mission);
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface MemberControllerDocs {
 
     @Operation(
-            summary = "유저의 리뷰 목록 조회 API By 누리 (개발중)",
+            summary = "유저의 리뷰 목록 조회 API By 누리 ",
             description = "특정 멤버의 리뷰를 모두 조회합니다. 페이지네이션으로 제공합니다."
     )
     @ApiResponses({
