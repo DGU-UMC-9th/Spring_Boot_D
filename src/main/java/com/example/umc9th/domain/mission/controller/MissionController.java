@@ -1,9 +1,6 @@
 package com.example.umc9th.domain.mission.controller;
 
-import com.example.umc9th.domain.mission.dto.ChallengeMissionResponseDTO;
-import com.example.umc9th.domain.mission.dto.HomeMissionResponseDTO;
-import com.example.umc9th.domain.mission.dto.MissionResDTO;
-import com.example.umc9th.domain.mission.dto.MissionResponseDTO;
+import com.example.umc9th.domain.mission.dto.*;
 import com.example.umc9th.domain.mission.exception.code.MissionSuccessCode;
 import com.example.umc9th.domain.mission.service.MissionCommandService;
 import com.example.umc9th.domain.mission.service.MissionQueryService;
@@ -36,15 +33,32 @@ public class MissionController {
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공"),
             @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "실패")
     })
-
-    @GetMapping()
-    public ApiResponse<MissionResDTO.MissionPreviewListDTO> getMissions(
+    @GetMapping("/stores")
+    public ApiResponse<MissionResDTO.MissionPreviewListDTO> getStoreMissions(
             @RequestParam String storeName,
             @RequestParam(defaultValue = "1") Integer page
     ) {
         return ApiResponse.onSuccess(MissionSuccessCode.FOUND,
-                missionQueryService.findMissions(storeName, page));
+                missionQueryService.findStoreMissions(storeName, page));
     }
+
+    @Operation(
+            summary = "내가 진행중인 미션 목록 조회 API By 누리 (개발중)",
+            description = "내가 진행중인 미션을 모두 조회합니다. 페이지네이션으로 제공합니다."
+    )
+    @ApiResponses({
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "성공"),
+            @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "실패")
+    })
+    @GetMapping("/members")
+    public ApiResponse<OngoingMissionResDTO.MissionPreviewListDTO> getMemberMissions(
+            @RequestParam Long memberId,
+            @RequestParam(defaultValue = "1") Integer page
+    ) {
+        return ApiResponse.onSuccess(MissionSuccessCode.FOUND,
+                missionQueryService.findMemberMissions(memberId, page));
+    }
+
 
     @PostMapping( "/{missionId}/members/{memberId}/challenge")
     public ApiResponse<ChallengeMissionResponseDTO> challengeMission(

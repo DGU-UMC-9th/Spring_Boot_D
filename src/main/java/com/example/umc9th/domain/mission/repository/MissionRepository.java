@@ -1,5 +1,6 @@
 package com.example.umc9th.domain.mission.repository;
 
+import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.mission.dto.ChallengeMissionResponseDTO;
 import com.example.umc9th.domain.mission.dto.MissionResDTO;
 import com.example.umc9th.domain.mission.entity.Mission;
@@ -29,4 +30,7 @@ public interface MissionRepository extends JpaRepository<Mission, Long> {
     );
 
     Page<Mission> findAllByStore(Store store, PageRequest pageRequest);
+
+
+
 }

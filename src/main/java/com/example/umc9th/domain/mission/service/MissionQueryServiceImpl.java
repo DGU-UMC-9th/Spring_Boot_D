@@ -1,8 +1,17 @@
 package com.example.umc9th.domain.mission.service;
 
+import com.example.umc9th.domain.member.entity.Member;
+import com.example.umc9th.domain.member.exception.MemberException;
+import com.example.umc9th.domain.member.exception.code.MemberErrorCode;
+import com.example.umc9th.domain.member.repository.MemberRepository;
+import com.example.umc9th.domain.mission.converter.MemberMissionConverter;
 import com.example.umc9th.domain.mission.converter.MissionConverter;
 import com.example.umc9th.domain.mission.dto.MissionResDTO;
+import com.example.umc9th.domain.mission.dto.OngoingMissionResDTO;
 import com.example.umc9th.domain.mission.entity.Mission;
+import com.example.umc9th.domain.mission.entity.mapping.MemberMission;
+import com.example.umc9th.domain.mission.enums.MemberMissionStatus;
+import com.example.umc9th.domain.mission.repository.MemberMissionRepository;
 import com.example.umc9th.domain.mission.repository.MissionRepository;
 import com.example.umc9th.domain.review.converter.ReviewConverter;
 import com.example.umc9th.domain.review.dto.ReviewDetailResponseDTO;
@@ -29,6 +38,8 @@ public class MissionQueryServiceImpl implements MissionQueryService {
     private final ReviewRepository reviewRepository;
     private final StoreRepository storeRepository;
     private final MissionRepository missionRepository;
+    private final MemberRepository memberRepository;
+    private final MemberMissionRepository memberMissionRepository;
 
     public Page<ReviewDetailResponseDTO> getMyFilteredReviews(
             Long memberId,
@@ -51,14 +62,27 @@ public class MissionQueryServiceImpl implements MissionQueryService {
     }
 
     @Override
-    public MissionResDTO.MissionPreviewListDTO findMissions(String storeName, Integer page) {
+    public MissionResDTO.MissionPreviewListDTO findStoreMissions(String storeName, Integer page) {
         Store store = storeRepository.findByName(storeName)
                 .orElseThrow(() -> new StoreException(StoreErrorCode.NOT_FOUND));
 
         PageRequest pageRequest = PageRequest.of(page, 10);
-        Page<Mission> missions = missionRepository.findAllByStore(store,pageRequest);
+        Page<Mission> result = missionRepository.findAllByStore(store,pageRequest);
 
-        return MissionConverter.toMissionPreviewListDTO(missions);
+        return MissionConverter.toMissionPreviewListDTO(result);
 
+    }
+
+    @Override
+    public OngoingMissionResDTO.MissionPreviewListDTO findMemberMissions(Long memberId, Integer page) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(()->new MemberException(MemberErrorCode.NOT_FOUND));
+
+        PageRequest pageRequest = PageRequest.of(page, 10);
+        Page<MemberMission> result = memberMissionRepository
+                .findAllByStatusAndMember(MemberMissionStatus.ONGOING,
+                        member, pageRequest);
+
+        return MemberMissionConverter.toMissionPreviewListDTO(result);
     }
 }
