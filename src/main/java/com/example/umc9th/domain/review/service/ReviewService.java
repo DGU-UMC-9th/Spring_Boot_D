@@ -6,23 +6,31 @@ import com.example.umc9th.domain.review.entity.Review;
 import com.example.umc9th.domain.review.repository.ReviewRepository;
 import com.example.umc9th.domain.store.entity.Store;
 import com.example.umc9th.domain.store.repository.StoreRepository;
-import org.springframework.transaction.annotation.Transactional;
+import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
+import com.example.umc9th.global.apiPayload.exception.GeneralException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class ReviewService {
+
     private final ReviewRepository reviewRepository;
     private final MemberRepository memberRepository;
     private final StoreRepository storeRepository;
 
-    public Long createReview(Long memberId, Long storeId, float star, String content) {
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("member not found"));
+    public Long createReview(Long storeId, float star, String content) {
+
+        // 로그인 미구현 → 과제 요구사항: DB에 있는 유저 한 명 하드코딩
+        Long hardCodedMemberId = 1L;
+
+        Member member = memberRepository.findById(hardCodedMemberId)
+                .orElseThrow(() -> new GeneralException(GeneralErrorCode.NOT_FOUND));
+
         Store store = storeRepository.findById(storeId)
-                .orElseThrow(() -> new IllegalArgumentException("store not found"));
+                .orElseThrow(() -> new GeneralException(GeneralErrorCode.NOT_FOUND));
 
         Review review = Review.builder()
                 .member(member)
