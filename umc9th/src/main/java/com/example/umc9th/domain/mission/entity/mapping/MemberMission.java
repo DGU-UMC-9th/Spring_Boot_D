@@ -28,4 +28,8 @@ public class MemberMission {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "member_id", nullable = false)
     private Member member;
+
+    public void complete() {
+        this.isComplete = true;
+    }
 }

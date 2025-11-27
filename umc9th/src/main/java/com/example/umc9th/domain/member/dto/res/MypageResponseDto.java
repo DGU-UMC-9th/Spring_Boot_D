@@ -1,4 +1,4 @@
-package com.example.umc9th.domain.member.dto;
+package com.example.umc9th.domain.member.dto.res;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

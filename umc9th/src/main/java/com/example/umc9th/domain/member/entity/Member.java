@@ -54,12 +54,13 @@ public class Member extends BaseEntity {
     @Column(name = "social_uid", nullable = false)
     private String socialUid;
 
-    @Column(name = "social_type", nullable = false)
+    @Column(name = "social_type")
     @Enumerated(EnumType.STRING)
-    private SocialType socialType;
+    private SocialType socialType = SocialType.LOCAL;
 
-    @Column(name = "point", nullable = false)
-    private int point;
+    @Column(name = "point")
+    @Builder.Default
+    private int point = 0;
 
     @Column(name = "email", nullable = false)
     private String email;
@@ -71,7 +72,8 @@ public class Member extends BaseEntity {
     private LocalDateTime deletedAt;
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
-    private List<MemberFood> memberFoodList = new ArrayList<>();
+    @Builder.Default
+    private List<MemberFood> memberFood = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
     private List<Review> reviewList = new ArrayList<>();

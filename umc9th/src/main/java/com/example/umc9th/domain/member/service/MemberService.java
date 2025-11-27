@@ -1,10 +1,8 @@
 package com.example.umc9th.domain.member.service;
 
-import com.example.umc9th.domain.member.dto.MypageResponseDto;
-import com.example.umc9th.domain.member.dto.MypageResponseDto;
+import com.example.umc9th.domain.member.dto.res.MypageResponseDto;
 import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.member.repository.MemberRepository;
-import com.example.umc9th.domain.test.exception.code.TestErrorCode;
 import com.example.umc9th.global.apiPayload.code.GeneralErrorCode;
 import com.example.umc9th.global.apiPayload.exception.GeneralException;
 import lombok.RequiredArgsConstructor;

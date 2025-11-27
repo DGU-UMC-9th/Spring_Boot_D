@@ -7,7 +7,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface MemberMissionRepository extends JpaRepository<MemberMission, Long> {
+    Optional<MemberMission> findByMemberIdAndMissionId(Long memberId, Long missionId);
 
     @Query("SELECT mm FROM MemberMission mm " +
             "JOIN FETCH mm.mission m " +
