@@ -1,16 +1,12 @@
-package com.example.umc9th.domain.review.service;
+package com.example.umc9th.domain.review.service.command;
 
 import com.example.umc9th.domain.member.entity.Member;
 import com.example.umc9th.domain.member.exception.MemberException;
 import com.example.umc9th.domain.member.exception.code.MemberErrorCode;
 import com.example.umc9th.domain.member.repository.MemberRepository;
-import com.example.umc9th.domain.mission.exception.MissionException;
-import com.example.umc9th.domain.mission.exception.code.MissionErrorCode;
 import com.example.umc9th.domain.review.dto.ReviewRequestDTO;
 import com.example.umc9th.domain.review.dto.ReviewResponseDTO;
 import com.example.umc9th.domain.review.entity.Review;
-import com.example.umc9th.domain.review.exception.ReviewException;
-import com.example.umc9th.domain.review.exception.code.ReviewErrorCode;
 import com.example.umc9th.domain.review.repository.ReviewRepository;
 import com.example.umc9th.domain.store.entity.Store;
 import com.example.umc9th.domain.store.exception.StoreException;
@@ -19,8 +15,6 @@ import com.example.umc9th.domain.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor

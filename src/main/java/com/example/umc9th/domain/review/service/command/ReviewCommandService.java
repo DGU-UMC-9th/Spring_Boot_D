@@ -1,4 +1,4 @@
-package com.example.umc9th.domain.review.service;
+package com.example.umc9th.domain.review.service.command;
 
 import com.example.umc9th.domain.review.dto.ReviewRequestDTO;
 import com.example.umc9th.domain.review.dto.ReviewResponseDTO;

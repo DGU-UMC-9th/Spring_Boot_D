@@ -1,12 +1,9 @@
 package com.example.umc9th.domain.review.controller;
 
-import com.example.umc9th.domain.review.dto.ReviewDetailResponseDTO;
-import com.example.umc9th.domain.review.dto.ReviewFilterRequest;
-import com.example.umc9th.domain.review.dto.ReviewRequestDTO;
-import com.example.umc9th.domain.review.dto.ReviewResponseDTO;
-import com.example.umc9th.domain.review.entity.Review;
-import com.example.umc9th.domain.review.service.ReviewCommandService;
-import com.example.umc9th.domain.review.service.ReviewQueryService; // 필터링 조회
+import com.example.umc9th.domain.review.dto.*;
+import com.example.umc9th.domain.review.exception.code.ReviewSuccessCode;
+import com.example.umc9th.domain.review.service.command.ReviewCommandService;
+import com.example.umc9th.domain.review.service.query.ReviewQueryServiceImpl; // 필터링 조회
 import com.example.umc9th.domain.review.service.ReviewService; // 리뷰 작성
 import com.example.umc9th.global.apiPayload.ApiResponse;
 import com.example.umc9th.global.apiPayload.code.GeneralSuccessCode;
@@ -16,20 +13,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/stores/{storeId}/reviews")
-public class ReviewController {
+public class ReviewController implements ReviewControllerDocs{
 
     private final ReviewService reviewService;
     private final ReviewCommandService reviewCommandService;
-    private final ReviewQueryService reviewQueryService;
+    private final ReviewQueryServiceImpl reviewQueryService;
 
 
 
-    @PostMapping("/members/{memberId}")
+    @PostMapping("/stores/{storeId}/reviews/members/{memberId}")
     public ApiResponse<ReviewResponseDTO> createReview(@PathVariable Long storeId,
                                                        @PathVariable Long memberId,
                                                        @RequestBody ReviewRequestDTO request) {
@@ -55,5 +49,16 @@ public class ReviewController {
                 reviewQueryService.getMyFilteredReviews(memberId, filterRequest, pageable);
 
         return ApiResponse.onSuccess(GeneralSuccessCode.OK, response);
+    }
+
+
+    @GetMapping("/reviews")
+    public ApiResponse<ReviewResDTO.ReviewPreviewListDTO> getReviews(
+            @RequestParam String storeName,
+            @RequestParam(defaultValue = "1") Integer page
+    ) {
+
+        ReviewSuccessCode code = ReviewSuccessCode.FOUND;
+        return ApiResponse.onSuccess(code, reviewQueryService.findReview(storeName,page));
     }
 }

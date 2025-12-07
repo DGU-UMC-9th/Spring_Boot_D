@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class ChallengeMissionResponseDTO {
     private Long missionId;
     private String storeName;
-    private LocalDate deadline;      // LocalDateTime → LocalDate
+    private LocalDate deadline;
     private String condition;
     private Integer point;
 }

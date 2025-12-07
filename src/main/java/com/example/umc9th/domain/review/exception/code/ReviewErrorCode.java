@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 public enum ReviewErrorCode implements BaseErrorCode {
     NOT_FOUND(HttpStatus.NOT_FOUND,
             "REVIEW404_1",
-            "해당 미션을 찾지 못했습니다."),
+            "해당 리뷰를 찾을 수 없습니다."),
     ;
 
     private final HttpStatus status;
