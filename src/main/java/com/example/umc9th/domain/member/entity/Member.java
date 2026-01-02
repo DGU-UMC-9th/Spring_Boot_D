@@ -6,6 +6,7 @@ import com.example.umc9th.domain.member.enums.Address;
 import com.example.umc9th.domain.member.enums.Gender;
 import com.example.umc9th.domain.member.enums.MemberStatus;
 import com.example.umc9th.domain.review.entity.Review;
+import com.example.umc9th.global.auth.enums.Role;
 import com.example.umc9th.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -31,7 +32,7 @@ public class Member extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", length = 3, nullable = false)
+    @Column(name = "name", length = 5, nullable = false)
     private String name;
 
     @Column(name = "gender", nullable = false)
@@ -49,17 +50,23 @@ public class Member extends BaseEntity {
     @Column(name = "detail_address")
     private String detailAddress;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status" , nullable = true)
     @Enumerated(EnumType.STRING)
     private MemberStatus status;
 
     @Column(name = "inactive_date")
     private LocalDate inactiveDate;
 
-    @Column(name = "email")
+    @Column(name = "email",nullable = false,unique = true)
     private String email;
 
-    @Column(name = "phone_number", length = 11, nullable = false)
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Column(name = "phone_number")
     private String phoneNumber;
 
     @Column(name = "point")
