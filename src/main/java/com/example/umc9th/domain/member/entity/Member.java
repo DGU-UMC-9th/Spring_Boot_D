@@ -1,0 +1,82 @@
+package com.example.umc9th.domain.member.entity;
+
+
+import com.example.umc9th.domain.member.entity.mapping.MemberFood;
+import com.example.umc9th.domain.member.enums.Address;
+import com.example.umc9th.domain.member.enums.Gender;
+import com.example.umc9th.domain.member.enums.MemberStatus;
+import com.example.umc9th.domain.review.entity.Review;
+import com.example.umc9th.global.auth.enums.Role;
+import com.example.umc9th.global.entity.BaseEntity;
+import jakarta.persistence.*;
+import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Table(name = "member")
+@EntityListeners(AuditingEntityListener.class)
+public class Member extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = "name", length = 5, nullable = false)
+    private String name;
+
+    @Column(name = "gender", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Gender gender = Gender.NONE;
+
+    @Column(name = "birth", nullable = false)
+    private LocalDate birth;
+
+    @Column(name = "address", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Address address;
+
+    @Column(name = "detail_address")
+    private String detailAddress;
+
+    @Column(name = "status" , nullable = true)
+    @Enumerated(EnumType.STRING)
+    private MemberStatus status;
+
+    @Column(name = "inactive_date")
+    private LocalDate inactiveDate;
+
+    @Column(name = "email",nullable = false,unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
+
+    @Column(name = "point")
+    @Builder.Default
+    private Integer point = 0 ;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.REMOVE)
+    @Builder.Default
+    private List<MemberFood> memberFoodList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Review> reviewList = new ArrayList<>();
+}
